@@ -1,0 +1,4 @@
+for (type var : array)
+{
+    statements using var;
+}

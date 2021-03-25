@@ -1,0 +1,134 @@
+Excel Read:
+(imagine like this)
+    -What do we do when we want to open a excel file and read it?
+
+        Step 1- first we think of the file name that we want to read
+                then we go to the location where it is located(PATH)
+
+        Step 2- then we locate the workbook
+
+        Step 3- then we open the workbook and look at the sheets
+
+        Step 4- then we look at the row where we want to read the data
+
+        Step 5 -then we look at column
+
+    - so we use FileInputStream to pass the PATH of the excel file we want to read (Step 1)
+
+    - We go to that file and we open the workbook using APACHE POI which has methods for us to use to read the file
+
+    - After opening the workbook, we open the spreadsheet we want to read
+
+    - We want to read all the input inside the file, so we use nested for each loop
+
+            - First we look at the rows--> we use rows to get our cell/column
+
+            - We use switch statement to determine the cell type
+
+            - we want to make sure that Java reads the appropriate input
+
+                --> if our cell is a String value then we want Java to read it as String
+
+                --> if our cell is a Integer value then we want Java to read it as Integer
+
+
+Excel Write:
+(imagine like this)
+    -What do we do when we want to create a excel file?
+
+    - Unlike the steps we take to read the file, we dont know the path of our file in the beginning because we havent even created it
+      so we cant pass any path at the moment---> so we dont use FileInputStream in the beginning
+
+    - We also have to keep it in mind that excel files are 2D arrays
+
+    - If we make our code dynamic, we have to pass a Object[][] data as a parameter- We use Object[][] to generalize the data
+
+                --> Our excel sheet might have String, or Integer, or Float, or etc
+
+                --> this object in JAVA will handle all of our data type in the excel file,
+                    it will read integer if it is integer, String if it is a String and float if it is float, etc
+
+        Step 1- what is the first step to create a file? We have to create the workbook using APACHE POI
+
+        Step 2 - We create the sheet after creating our workbook
+
+        Step 3- after creating our sheets, we have to create our rows and columns
+
+                --> we use nested for each loops to create our rows and columns
+                --> We use our Object[][] in our loop
+                --> So we have to go from 2D to 1D
+                --> once we create our loop for row and column--> we have to use APACHE POI to create our rows and columns
+                --> then again like when we read the file--> We have to put the cell type, it could be Integer, String, Double, Float, etc
+                --> we use if statements to declare what Java should do with the cell type
+
+ *************  --> We use Wrapper class when we r comparing our cell info to a data type because We want to compare it to the parent class
+                            --> we are not using (int) because we use (int) to declare variables
+                            -->Integer is the parent class, we use Wrapper classes when we are doing instance of
+
+        Step 4-(FileOutputStream is a internal server--> Java FileOutputStream is an output stream used for writing data to a file)
+
+                -->What do we do after we create our excel sheet?---> we want to save our file right??
+
+                        --> Now we use FileOutputStream to take our outputs and put it in the file path we selected
+
+                        --> So we select the path where we want to create our file
+
+        Step 5- We use the workbook.write() to write into our excel file
+
+        Step 6- We close our excel file (workbook) after saving it right???---> workbook.clos()
+
+
+
+public class CreatingExcelWithIntegerAndStringValues {
+    public static String file_Path = "../Practice/DataTest/PracticingCreating.xlsx";
+    public static void main(String[] args) throws IOException {
+        Object[][] TutoringSquad = {//by Using OBJECT- I am able to read both integer and String type
+                {"stId", "stFirst_Name", "stLastName", "stAge"},
+                {102, "Aleign", "Negash", 6},
+                {103, "Easha", "Khanam", 2},
+                {104, "Simar", "Kaur", 4},
+                {105, "Nafiz", "Islam", 1},
+                {106, "Israt", "Reto", 5}
+
+        };
+
+        creating_Excel(file_Path,"students",TutoringSquad);
+    }
+
+    public static void creating_Excel(String filePath, String sheetName, Object [][] data) throws IOException {
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet(sheetName);
+        System.out.println("Excel sheet is created!!");
+        int rowNum = 0;
+        for(Object[] r : data){
+            // for(datatype item : array): my datatype- Object[], r is my array I am creating using data, data is my array that i am passing in my parameters
+
+            XSSFRow row = sheet.createRow(rowNum++);
+
+            int cellNum = 0;
+            for(Object c : r){// I am using the r array i created above to create my cell array
+                XSSFCell cell = row.createCell(cellNum++);
+                if(c instanceof String){// so if my type variable is String
+                    cell.setCellValue((String)c); //then set my cell to be read as string
+
+                }else if(c instanceof Integer){
+                    cell.setCellValue((Integer)c);
+
+
+                }
+            }
+        }
+
+        FileOutputStream outputStream = new FileOutputStream(filePath);
+        workbook.write(outputStream);
+        workbook.close();
+    }
+
+
+
+
+
+}
+
+
+

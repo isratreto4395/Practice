@@ -1,0 +1,9 @@
+Scanner and BufferReader both classes are used to read input from external system.
+Scanner is normally used when we know input is of type string or of primitive types
+and BufferReader is used to read text from character streams while buffering the
+characters for efficient reading of characters.
+
+_ BufferedReader gives a better way to read exception
+- Scanner does not always give a correct exception
+-Scanner is bit slower as it need to parse data as well.
+- BufferReader is faster than Scanner as it only reads a character stream

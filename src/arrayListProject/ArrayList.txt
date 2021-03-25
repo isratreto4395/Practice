@@ -1,0 +1,16 @@
+ArrayList
+- A resizable array
+- size of an array is fixed. Example- if we make the size of the array 10 then
+its fixed at 10 in the memory.. we cant make it 11
+-Arraylist is more dynamic.. so it is not fixed
+- so the size of the arraylist can change according to the element inside it
+- you can store elements in a arraylist
+- ArrayList is an object
+
+
+syntax:
+
+ArrayList<specify the type of the arraylist> name of the Arraylist
+(what is the type)(You will use the class of the type.. so ex if u want the elements to be int then u will use Interger
+
+
